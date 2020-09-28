@@ -1,9 +1,9 @@
+import java.util.ArrayList;
 
-
-public class Vehiculo
+public class Vehiculo 
 {
    
-    public static Vehiculo[] vehiculos;  //vector de las estancias de vehiculos abiertas
+    public static ArrayList<Vehiculo> vehiculos= new ArrayList<Vehiculo>();  //vector de las estancias de vehiculos abiertas
     public static int cantidad=0;  //cuenta cuantos carros se han parqueado
     
     private String placa;
@@ -61,25 +61,36 @@ public class Vehiculo
     
     
     public String toString(){
-    String texto= "Placa: "+this.getPlaca()+"||  "+"Color: "+this.getColor()+"||  "+ "Marca: "+this.getMarca()+"||  "+"Valor: "+this.getValorComercial(); 
+    String texto= "Placa: "+this.getPlaca()+" ||  "+"Color: "+this.getColor()+" ||  "+ "Marca: "+this.getMarca()+" ||  "+"Valor: "+this.getValorComercial(); 
     return texto;
     }
     
     
-    public static String toStringVehiculos(){
+    public static String toStringVehiculos(ArrayList<Vehiculo> vs){
     String texto="";
-        for(int i=0;i<vehiculos.length;i++){
-            if(vehiculos[i]!=null){
-            texto=texto+"\n"+(vehiculos[i]).toString();
-            }
+        for(int i=0;i<vs.size();i++){
+            texto=texto+"\n"+(vs.get(i)).toString();    
         }
     return texto;
     }    
     
     
+    public static String colorVehiculos(String c){
+    String texto="";
+        for(int i=0;i<vehiculos.size();i++){
+              String color=((vehiculos.get(i)).color).toLowerCase();
+              if(color.equals(c.toLowerCase())){
+              texto=texto+"\n"+(vehiculos.get(i)).toString();}
+            
+        }
+    return texto;
+    }
+    
+ 
     public static int cantidadVehiculos(){
     return Vehiculo.cantidad;
     }
+    
 }    
     
     

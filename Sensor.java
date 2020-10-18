@@ -34,7 +34,7 @@ public class Sensor{
         String texto="";
             for(int i=0;i<sensores.length;i++){
                 if(sensores[i].getEstado()==0){
-                    texto=texto+"\n"+ "El parqueadero "+i+" esta libre";
+                    texto=texto+"\n"+ "El parqueadero "+(i+1)+" esta libre";
                 }
             }
         return texto;
@@ -45,9 +45,9 @@ public class Sensor{
     String texto="";
         for(int i=0;i<sensores.length;i++){
             if(sensores[i].getEstado()==0){
-                texto=texto+"\n"+ "El parqueadero "+i+" esta libre";
+                texto=texto+"\n"+ "El parqueadero "+(i+1)+" esta libre";
             }else{
-                texto=texto+"\n"+ "El parqueadero "+i+" esta ocupado";
+                texto=texto+"\n"+ "El parqueadero "+(i+1)+" esta ocupado";
             }
         }
     return texto;

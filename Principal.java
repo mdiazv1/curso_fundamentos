@@ -35,8 +35,8 @@ public class Principal{
                     
                   case 2:
                       System.out.println("En que espacio se desea parquear?");
-                      esp=scan.nextInt();
-                      if(esp>n){
+                      esp=scan.nextInt()-1;
+                      if(esp>=n){
                           System.out.println("Espacio inexistente");
                           break;
                       }
@@ -58,7 +58,7 @@ public class Principal{
                         
                   case 3:
                     System.out.println("En que espacio se desea parquear?");
-                      esp=scan.nextInt();
+                      esp=scan.nextInt()-1;
                       if(esp>n){
                           System.out.println("Espacio inexistente");
                           break;
@@ -86,15 +86,21 @@ public class Principal{
                       break;
                         
                   case 5:
-                      System.out.println("la cantidad de ehiculos parqueados hasta el momento es: "+Vehiculo.cantidadVehiculos());
+                      System.out.println("la cantidad de vehiculos parqueados hasta el momento es: "+Vehiculo.cantidadVehiculos());
                       break;
                         
                   case 6:
                       System.out.println("ingrese el numero de el espacio para conocer su estado");
-                      esp=scan.nextInt();
+                      esp=scan.nextInt()-1;
+                      if(esp>=n){
+                          System.out.println("Espacio inexistente");
+                          break;
+                      }
                       if((Sensor.sensores[esp]).getEstado()==1){
-                          System.out.println("Espacio ocupado");}else{
-                          System.out.println("Espacio libre");}
+                          System.out.println("Espacio ocupado");
+                      }else{
+                          System.out.println("Espacio libre");
+                      }
                       break;
                         
                   case 7:

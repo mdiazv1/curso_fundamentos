@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Date;
 
 public class Principal{
 
@@ -11,12 +10,19 @@ public class Principal{
       
       public static void mostrarMenu(){
           int n;
+          double vmoto,vcarro;
           int comando=-1;
           int esp;
           Scanner scan= new Scanner(System.in);
           System.out.println("Cuantos espacios tiene su parqueadero?"); 
           n=scan.nextInt();
+          System.out.println("Cuanto vale la hora de una moto?");
+          vmoto=scan.nextDouble();
+          System.out.println("Cuanto vale la hora de un carro?");
+          vcarro=scan.nextDouble();
           Sensor.sensores= new Sensor[n];
+          Vehiculo.vehiculos= new Vehiculo[n];
+          
             
           for(int i=0;i<Sensor.sensores.length;i++){//inicializar los sensores en 0 (libres)
               Sensor.sensores[i]=new Sensor(0);}//inicializar los sensores en 0 (libres)
@@ -49,8 +55,20 @@ public class Principal{
                           String m=scan.next();
                           System.out.println("Ingrese color");
                           String c=scan.next();
-                          Vehiculo v=new Vehiculo(p,m,c);
-                          (Vehiculo.vehiculos).add(v);
+                          System.out.println("Ingresetipo de vehiculo");
+                          String t=scan.next();
+                          t=t.toLowerCase();
+                          Vehiculo v;
+                          if(t.equals("carro")){
+                              v=new Carro(p,m,c);
+                          }
+                          else if(t.equals("moto")){
+                              v=new Moto(p,m,c);
+                          }
+                          else{System.out.println("tipo de vehiculo no reconocido");
+                              break;
+                          }
+                          Vehiculo.vehiculos[esp]=v;
                           (Sensor.sensores[esp]).setEstado(1);
                           System.out.println(v.toString());
                       }
@@ -74,8 +92,20 @@ public class Principal{
                           String c=scan.next();
                           System.out.println("Ingrese valor comercial");
                           int precio=scan.nextInt();
-                          Vehiculo v=new Vehiculo(p,m,c,precio);
-                          (Vehiculo.vehiculos).add(v);
+                          System.out.println("Ingresetipo de vehiculo");
+                          String t=scan.next();
+                          t=t.toLowerCase();
+                          Vehiculo v;
+                          if(t.equals("carro")){
+                              v=new Carro(p,m,c,precio);
+                          }
+                          else if(t.equals("moto")){
+                              v=new Moto(p,m,c,precio);
+                          } 
+                          else{System.out.println("tipo de vehiculo no reconocido");
+                              break;
+                          }
+                          Vehiculo.vehiculos[esp]=v;
                           (Sensor.sensores[esp]).setEstado(1);
                           System.out.println(v.toString());
                       }
@@ -114,12 +144,61 @@ public class Principal{
                       break;
                         
                   case 9:
-                      Collections.sort(Vehiculo.vehiculos,Comparator.comparing(Vehiculo::getValorComercial));
-                  System.out.println(Vehiculo.toStringVehiculos(Vehiculo.vehiculos));
-                  break;
-                    
-              default:
-                  System.out.println("Comando incorrecto");  
+                      Vehiculo [] a = new Vehiculo[n];
+                      int h=0;
+                      for (int i=0; i<n; i++){
+                          if(Vehiculo.vehiculos[i] != null){
+                              a[h]=Vehiculo.vehiculos[i];
+                              h++;
+                          }
+                      }
+                      
+                      for(int i=0; i<n; i++){
+                          for(int j=0; j<n-1; j++){
+                              if(a[j]!= null && a[j+1] != null && a[j].getValorComercial()<a[j+1].getValorComercial()){
+                                  Vehiculo b;
+                                  if(a[j].tipo().equals("carro")){
+                                      b = new Carro(a[j].getPlaca(), a[j].getMarca(), a[j].getColor(), a[j].getValorComercial());
+                                  }
+                                  else{
+                                      b = new Moto(a[j].getPlaca(), a[j].getMarca(), a[j].getColor(), a[j].getValorComercial());
+                                  }
+                                  // falta aclarar el tipo de vehiculo 
+                                  a[j]=a[j+1];
+                                  a[j+1]=b;
+                              }
+                          }
+                      }
+                      System.out.println(Vehiculo.toStringVehiculos(a));
+                      break;
+                  case 10:
+                      Date salida=new Date();
+                      Date entrada;
+                      double horas;
+                      System.out.println("En que espacio estaba parqueado");
+                      esp=scan.nextInt()-1;
+                      Vehiculo v=Vehiculo.vehiculos[esp];
+                      if (v==null){
+                          System.out.println("ese espacio estaba desocupado");
+                          break;
+                      }
+                      entrada=v.getEntrada();
+                      double mlsegundos=(salida.getTime()-entrada.getTime());
+                      Vehiculo.vehiculos[esp]=null;
+                      Sensor.sensores[esp].setEstado(0);
+                      if(v.tipo().equals("carro")){
+                          System.out.println("El valor a pagar es: " + mlsegundos*vcarro/3600000 );
+                          break;
+                      }
+                      else{
+                          System.out.println("El valor a pagar es: " + mlsegundos*vmoto/3600000 );
+                          break;
+                      }
+                      
+                      
+                  default:
+                      System.out.println("Comando incorrecto");
+                      break;
              }            
           }
       }   

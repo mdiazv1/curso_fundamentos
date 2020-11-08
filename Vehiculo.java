@@ -1,14 +1,18 @@
-import java.util.ArrayList;
 
-public class Vehiculo{
+import java.util.ArrayList;
+import java.util.Date;
+
+public abstract class Vehiculo{
   
-    public static ArrayList<Vehiculo> vehiculos= new ArrayList<Vehiculo>();  //vector de las estancias de vehiculos abiertas
+    public static Vehiculo [] vehiculos;  //vector de las estancias de vehiculos abiertas
     public static int cantidad=0;  //cuenta cuantos carros se han parqueado
     
     private String placa;
     private String marca;
     private String color;
     private int valorComercial;
+    
+    private Date entrada;
 
 
     public Vehiculo(){}
@@ -18,6 +22,7 @@ public class Vehiculo{
     }
     
     public Vehiculo(String p, String m, String c, int v){
+        this.entrada= new Date();
         this.placa=p;
         this.marca=m;
         this.color=c;
@@ -57,17 +62,24 @@ public class Vehiculo{
         return this.valorComercial;
     }  
     
+    public Date getEntrada(){
+        return this.entrada;
+    }
+    
     
     public String toString(){
-        String texto= "Placa: "+this.getPlaca()+" ||  "+"Color: "+this.getColor()+" ||  "+ "Marca: "+this.getMarca()+" ||  "+"Valor: "+this.getValorComercial(); 
+        String texto= "Placa: "+this.getPlaca()+" ||  "+"Color: "+this.getColor()+" ||  "+ "Marca: "+this.getMarca()+" ||  "+"Valor: "+this.getValorComercial()
+        +" ||  Tipo de vehiculo: " +this.tipo() + " ||  fecha de entrada: "+ entrada;
         return texto;
     }
     
     
-    public static String toStringVehiculos(ArrayList<Vehiculo> vs){
+    public static String toStringVehiculos(Vehiculo [] vs){
         String texto="";
-            for(int i=0;i<vs.size();i++){
-                texto=texto+"\n"+(vs.get(i)).toString();    
+            for(int i=0;i<vs.length;i++){
+                if(vs[i]!=null){
+                    texto=texto+"\n"+vs[i].toString();
+                }
             }
         return texto;
     }    
@@ -75,10 +87,13 @@ public class Vehiculo{
     
     public static String colorVehiculos(String c){
         String texto="";
-            for(int i=0;i<vehiculos.size();i++){
-                  String color=((vehiculos.get(i)).color).toLowerCase();
+            for(int i=0;i<vehiculos.length;i++){
+                  if(vehiculos[i]==null){
+                      continue;
+                  }
+                  String color=(vehiculos[i].color).toLowerCase();
                   if(color.equals(c.toLowerCase())){
-                      texto=texto+"\n"+(vehiculos.get(i)).toString();
+                      texto=texto+"\n"+vehiculos[i].toString();
                   }
                 
             }
@@ -90,6 +105,7 @@ public class Vehiculo{
         return Vehiculo.cantidad;
     }
     
+    public abstract String tipo();
 }    
     
     

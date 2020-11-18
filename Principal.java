@@ -1,14 +1,15 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.*;
+import java.io.*;
 
 public class Principal{
 
-      public static void main(String[] args){
+      public static void main(String[] args)throws IOException{
           Principal.mostrarMenu();
       }   
       
-      public static void mostrarMenu(){
+      public static void mostrarMenu()throws IOException{
           int n;
           double vmoto,vcarro;
           int comando=-1;
@@ -59,7 +60,7 @@ public class Principal{
                           String t=scan.next();
                           t=t.toLowerCase();
                           Vehiculo v;
-                          if(t.equals("carro")){
+                          if(t.equals("carro")|| t.equals("auto")){
                               v=new Carro(p,m,c);
                           }
                           else if(t.equals("moto")){
@@ -96,7 +97,7 @@ public class Principal{
                           String t=scan.next();
                           t=t.toLowerCase();
                           Vehiculo v;
-                          if(t.equals("carro")){
+                          if(t.equals("carro")|| t.equals("auto")){
                               v=new Carro(p,m,c,precio);
                           }
                           else if(t.equals("moto")){
@@ -166,6 +167,7 @@ public class Principal{
                                   // falta aclarar el tipo de vehiculo 
                                   a[j]=a[j+1];
                                   a[j+1]=b;
+                                  Vehiculo.cantidad--;
                               }
                           }
                       }
@@ -194,8 +196,12 @@ public class Principal{
                           System.out.println("El valor a pagar es: " + mlsegundos*vmoto/3600000 );
                           break;
                       }
-                      
-                      
+                     
+                  case 11:
+                      PrintWriter doc = new PrintWriter (new FileWriter("resultados.txt",false));
+                      doc.println(Vehiculo.toStringVehiculos(Vehiculo.vehiculos));
+                      doc.close();
+                      break;
                   default:
                       System.out.println("Comando incorrecto");
                       break;

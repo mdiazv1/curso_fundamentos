@@ -1,2 +1,1 @@
 
-Placa: e ||  Color: g ||  Marca: r ||  Valor: 30000000 ||  Tipo de vehiculo: carro ||  fecha de entrada: Wed Nov 18 17:55:45 COT 2020
